@@ -1,8 +1,6 @@
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from typing import List, Optional
-
 from django.conf import settings as dj_settings
 
 
@@ -40,8 +38,7 @@ def from_django_settings() -> Config:
         bind_dn=getattr(dj_settings, 'LDAP_BIND_DN', getattr(dj_settings, 'USERNAME', None)),
         bind_password=getattr(dj_settings, 'LDAP_BIND_PASSWORD', getattr(dj_settings, 'PASSWORD', None)),
         search_filter=getattr(dj_settings, 'LDAP_SEARCH_FILTER', '(&(objectClass=user)(sAMAccountName={username}))'),
-        search_attrs=list(getattr(dj_settings, 'LDAP_SEARCH_ATTRS',
-                                  ['cn', 'mail', 'givenName', 'sn', 'memberOf', 'userPrincipalName'])),
+        search_attrs=list(getattr(dj_settings, 'LDAP_SEARCH_ATTRS', ['cn', 'mail', 'givenName', 'sn', 'memberOf', 'userPrincipalName'])),
         default_email_domain=getattr(dj_settings, 'LDAP_DEFAULT_EMAIL_DOMAIN', None),
         map_first_name=getattr(dj_settings, 'LDAP_MAP_FIRST_NAME', 'givenName'),
         map_last_name=getattr(dj_settings, 'LDAP_MAP_LAST_NAME', 'sn'),

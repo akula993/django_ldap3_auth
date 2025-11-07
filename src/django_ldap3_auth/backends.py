@@ -20,6 +20,14 @@ class LDAPBackend(BaseBackend):
             conf = LDAPConfig.to_conf(conf)
         return conf
 
+    @staticmethod
+    def _first(value):
+        if value is None:
+            return ''
+        if isinstance(value, (list, tuple)):
+            return value[0] if value else ''
+        return value
+
     def authenticate(self, request, username: Optional[str] = None, password: Optional[str] = None, **kwargs):
         if not username or not password:
             return None
@@ -32,6 +40,8 @@ class LDAPBackend(BaseBackend):
             return None
 
         # 2) Находим DN по фильтру
+        # В settings.py задай:
+        # LDAP_SEARCH_FILTER = '(|(&(objectClass=user)(sAMAccountName={username}))(&(objectClass=user)(userPrincipalName={username})))'
         data = search_user(conn, conf.base_dn, conf.search_filter, username, conf.search_attrs)
         conn.unbind()
         if not data or 'dn' not in data:
@@ -49,49 +59,35 @@ class LDAPBackend(BaseBackend):
         elif conf.default_email_domain:
             email = f"{username}@{conf.default_email_domain}"
 
-        first_name = ''
-        last_name = ''
-        if conf.map_first_name in data:
-            v = data[conf.map_first_name]
-            first_name = v[0] if isinstance(v, list) else v
-        if conf.map_last_name in data:
-            v = data[conf.map_last_name]
-            last_name = v[0] if isinstance(v, list) else v
+        first_name = self._first(data.get(conf.map_first_name))
+        last_name  = self._first(data.get(conf.map_last_name))
 
         with transaction.atomic():
-            user, created = User.objects.get_or_create(username=username, defaults={
-                'email': email or '',
-                'first_name': first_name or '',
-                'last_name': last_name or '',
-            })
-            # Обновление атрибутов при каждом входе
+            user, created = User.objects.get_or_create(
+                username=username,
+                defaults={'email': email or '', 'first_name': first_name or '', 'last_name': last_name or ''},
+            )
             changed = False
             if email and user.email != email:
-                user.email = email;
-                changed = True
+                user.email = email; changed = True
             if first_name and user.first_name != first_name:
-                user.first_name = first_name;
-                changed = True
+                user.first_name = first_name; changed = True
             if last_name and user.last_name != last_name:
-                user.last_name = last_name;
-                changed = True
+                user.last_name = last_name; changed = True
 
-            # Роли по группам AD
             member_of = data.get('memberOf') or []
             if isinstance(member_of, str):
                 member_of = [member_of]
 
             if conf.superuser_group and conf.superuser_group in member_of:
                 if not user.is_superuser:
-                    user.is_superuser = True;
-                    changed = True
+                    user.is_superuser = True; changed = True
                 if not user.is_staff:
-                    user.is_staff = True;
-                    changed = True
+                    user.is_staff = True; changed = True
             if conf.staff_group and conf.staff_group in member_of:
                 if not user.is_staff:
-                    user.is_staff = True;
-                    changed = True
+                    user.is_staff = True; changed = True
+
             if changed:
                 user.save(update_fields=['email', 'first_name', 'last_name', 'is_staff', 'is_superuser'])
         return user

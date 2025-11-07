@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-28 14:43+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+msgid "Например: dc.example.com"
+msgstr ""
+
+msgid "Например: DC=example,DC=com"
+msgstr ""
+
+msgid "Например: ldapuser@example.com"
+msgstr ""
+
+msgid "Хост контроллера домена"
+msgstr ""
+
+msgid "Порт"
+msgstr ""
+
+msgid "Использовать SSL (LDAPS)"
+msgstr ""
+
+msgid "Base DN"
+msgstr ""
+
+msgid "Bind DN (сервисная учётка)"
+msgstr ""
+
+msgid "Пароль сервисной учётки"
+msgstr ""
+
+msgid "Фильтр поиска пользователя"
+msgstr ""
+
+msgid "Атрибуты для выборки"
+msgstr ""
+
+msgid "Домен email по умолчанию"
+msgstr ""
+
+msgid "Атрибут имени (first_name)"
+msgstr ""
+
+msgid "Атрибут фамилии (last_name)"
+msgstr ""
+
+msgid "DN группы суперпользователей"
+msgstr ""
+
+msgid "DN группы персонала (staff)"
+msgstr ""
+
+msgid "FQDN или IP контроллера домена (например, dc.example.com)."
+msgstr ""
+
+msgid "389 для LDAP, 636 для LDAPS (SSL)."
+msgstr ""
+
+msgid "Если включено, будет использоваться LDAPS на порту 636."
+msgstr ""
+
+msgid "Корневой DN домена (например, DC=doublev,DC=ru). Будет предложен автоматически на основе хоста."
+msgstr ""
+
+msgid "UPN или DN сервисной учётной записи для поиска пользователей (например, ldapuser@example.com)."
+msgstr ""
+
+msgid "Рекомендуется задавать через переменные окружения. Ввод скрыт в админке."
+msgstr ""
+
+#, python-brace-format
+msgid "Используется для поиска DN пользователя. {username} будет подставлен автоматически."
+msgstr ""
+
+msgid "Список атрибутов AD, которые нужно получать вместе с DN."
+msgstr ""
+
+msgid "Если у пользователя нет mail в AD — будет сгенерирован username@этот.домен."
+msgstr ""
+
+msgid "Имя поля AD, из которого брать имя пользователя (например, givenName)."
+msgstr ""
+
+msgid "Имя поля AD, из которого брать фамилию пользователя (например, sn)."
+msgstr ""
+
+msgid "Члены этой группы получат права суперпользователя Django."
+msgstr ""
+
+msgid "Члены этой группы получат доступ к админке (is_staff)."
+msgstr ""
+
+msgid "LDAP конфигурация"
+msgstr ""
+
+msgid "LDAP конфигурация (одна запись)"
+msgstr ""

@@ -2,7 +2,6 @@
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
 name = "django-ldap3-auth"
 version = "0.1.0"
@@ -12,19 +11,16 @@ authors = [{ name = "akula993", email = "akula993@gmail.com" }]
 license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
-    "Django>=4.2",
-    "ldap3>=2.9",
+  "Django>=4.2",
+  "ldap3>=2.9",
 ]
-
 
 [project.urls]
 Homepage = "https://example.com/django-ldap3-auth"
 
-
 [tool.setuptools]
-package-dir = { "" = "src" }
+package-dir = {"" = "src"}
 include-package-data = true
-
 
 [tool.setuptools.packages.find]
 where = ["src"]

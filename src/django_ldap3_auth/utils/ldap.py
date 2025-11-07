@@ -1,10 +1,8 @@
 from typing import Optional, Tuple
-
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE, Tls
 
 
-def connect(host: str, port: int, use_ssl: bool, bind_dn: Optional[str] = None,
-            bind_password: Optional[str] = None) -> Connection:
+def connect(host: str, port: int, use_ssl: bool, bind_dn: Optional[str] = None, bind_password: Optional[str] = None) -> Connection:
     server = Server(host, port=port, use_ssl=use_ssl, get_info=ALL)
     if bind_dn:
         conn = Connection(server, user=bind_dn, password=bind_password, auto_bind=True)
@@ -13,8 +11,7 @@ def connect(host: str, port: int, use_ssl: bool, bind_dn: Optional[str] = None,
     return conn
 
 
-def search_user(conn: Connection, base_dn: str, search_filter: str, username: str, attributes: list[str]) -> Optional[
-    dict]:
+def search_user(conn: Connection, base_dn: str, search_filter: str, username: str, attributes: list[str]) -> Optional[dict]:
     flt = search_filter.format(username=username)
     if not conn.search(search_base=base_dn, search_filter=flt, search_scope=SUBTREE, attributes=attributes):
         return None
@@ -34,3 +31,4 @@ def try_bind(host: str, port: int, use_ssl: bool, dn: str, password: str) -> boo
         return True
     except Exception:
         return False
+
